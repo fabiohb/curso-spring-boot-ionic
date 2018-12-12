@@ -1,4 +1,4 @@
-package com.fabiohb.cursos;
+package com.fabiohb.cursos.cursomc;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
