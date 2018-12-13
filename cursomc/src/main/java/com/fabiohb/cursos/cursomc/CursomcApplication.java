@@ -2,8 +2,6 @@ package com.fabiohb.cursos.cursomc;
 
 import static java.util.Arrays.asList;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

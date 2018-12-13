@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.fabiohb.cursos.cursomc.domain.Categoria;
 import com.fabiohb.cursos.cursomc.repositories.CategoriaRepository;
+import com.fabiohb.cursos.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 @Scope(BeanDefinition.SCOPE_SINGLETON)
@@ -17,8 +18,10 @@ public class CategoriaService {
 	
 	public Categoria buscar(Integer id) {
 		return repository
-				.findById(id)
-				.orElse(null);
+			.findById(id)
+			.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName())
+			);
 	}
 	
 }
