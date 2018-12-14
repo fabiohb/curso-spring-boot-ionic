@@ -15,6 +15,7 @@ import com.fabiohb.cursos.cursomc.domain.Cidade;
 import com.fabiohb.cursos.cursomc.domain.Cliente;
 import com.fabiohb.cursos.cursomc.domain.Endereco;
 import com.fabiohb.cursos.cursomc.domain.Estado;
+import com.fabiohb.cursos.cursomc.domain.ItemPedido;
 import com.fabiohb.cursos.cursomc.domain.Pagamento;
 import com.fabiohb.cursos.cursomc.domain.PagamentoComBoleto;
 import com.fabiohb.cursos.cursomc.domain.PagamentoComCartao;
@@ -27,6 +28,7 @@ import com.fabiohb.cursos.cursomc.repositories.CidadeRepository;
 import com.fabiohb.cursos.cursomc.repositories.ClienteRepository;
 import com.fabiohb.cursos.cursomc.repositories.EnderecoRepository;
 import com.fabiohb.cursos.cursomc.repositories.EstadoRepository;
+import com.fabiohb.cursos.cursomc.repositories.ItemPedidoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PagamentoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PedidoRepository;
 import com.fabiohb.cursos.cursomc.repositories.ProdutoRepository;
@@ -57,6 +59,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -120,5 +125,18 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(asList(pedido1, pedido2));
 		pagamentoRepository.saveAll(asList(pagamento1, pagamento2));
+		
+		ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1, 1, 0.00, 2000.00);
+		ItemPedido itemPedido2 = new ItemPedido(pedido1, produto3, 2, 0.00, 80.00);
+		ItemPedido itemPedido3 = new ItemPedido(pedido2, produto2, 1, 100.00, 800.00);
+		
+		pedido1.getItens().addAll(asList(itemPedido1, itemPedido2));
+		pedido2.getItens().add(itemPedido3);
+		
+		produto1.getItens().add(itemPedido1);
+		produto2.getItens().add(itemPedido3);
+		produto3.getItens().add(itemPedido2);
+		
+		itemPedidoRepository.saveAll(asList(itemPedido1, itemPedido2, itemPedido3));
 	}
 }
