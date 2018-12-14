@@ -1,0 +1,14 @@
+Tomcat (37.363.060  bytes)
+5.400 seconds (JVM running for 5.865) - 446,4 MB
+5.429 seconds (JVM running for 5.896) - 469,6 MB
+5.398 seconds (JVM running for 5.871) - 472,2 MB
+
+Jetty (37.160.094)
+5.452 seconds (JVM running for 5.937) - 499,8 MB
+5.370 seconds (JVM running for 5.859) - 469,5
+5.370 seconds (JVM running for 5.864) - 602,4
+
+Undertow (37.597.548)
+5.118 seconds (JVM running for 5.584) - 483,9
+5.109 seconds (JVM running for 5.580) - 458,7
+5.050 seconds (JVM running for 5.52) - 462,1
