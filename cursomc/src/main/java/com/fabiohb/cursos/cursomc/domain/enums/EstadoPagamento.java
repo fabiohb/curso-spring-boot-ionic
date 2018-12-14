@@ -1,16 +1,18 @@
 package com.fabiohb.cursos.cursomc.domain.enums;
 
-public enum TipoCliente {
-
-	PESSOA_FISICA(1, "Pessoa Física"), 
+public enum EstadoPagamento {
 	
-	PESSOA_JURIDICA(2, "Pessoa Jurídica");
+	PENDENTE(1, "Pendente"), 
+	
+	QUITADO(2, "Quitado"),
+	
+	CANCELADO(3, "Cancelando");
 	
 	private int cod;
 	
 	private String descricao;
 
-	private TipoCliente(int cod, String descricao) {
+	private EstadoPagamento(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -23,12 +25,12 @@ public enum TipoCliente {
 		return descricao;
 	}
 
-	public static TipoCliente toEnum(Integer id) {
+	public static EstadoPagamento toEnum(Integer id) {
 		if (id == null) {
 			return null;
 		}
 		
-		for (TipoCliente tipo : values()) {
+		for (EstadoPagamento tipo : values()) {
 			if (id.equals(tipo.getCod())) {
 				return tipo;
 			}
