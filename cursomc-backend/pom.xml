@@ -8,7 +8,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.1.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
 
 	<groupId>com.fabiohb.cursos</groupId>
@@ -50,27 +50,36 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
+<!--
+ 			<exclusions>
+ 				<exclusion>
+ 					<groupId>org.springframework.boot</groupId> 
+ 					<artifactId>spring-boot-starter-tomcat</artifactId> 
+ 				</exclusion>
+ 			</exclusions>
+-->
 		</dependency>
+
+<!--
+ 		<dependency> 
+ 			<groupId>org.springframework.boot</groupId> 
+ 			<artifactId>spring-boot-starter-jetty</artifactId> 
+ 		</dependency> 
+
+ 		<dependency> 
+ 			<groupId>org.springframework.boot</groupId> 
+ 			<artifactId>spring-boot-starter-undertow</artifactId> 
+ 		</dependency> 
+-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-undertow</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
@@ -90,6 +99,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 </project>
