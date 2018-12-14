@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fabiohb.cursos.cursomc.domain.Cliente;
-import com.fabiohb.cursos.cursomc.services.ClienteService;
+import com.fabiohb.cursos.cursomc.domain.Pedido;
+import com.fabiohb.cursos.cursomc.services.PedidoService;
 
 @RestController
-@RequestMapping("/clientes")
+@RequestMapping("/pedidos")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-public class ClienteResource {
+public class PedidoResource {
 
 	@Autowired
-	private ClienteService service;
+	private PedidoService service;
 	
 	@GetMapping
 	@RequestMapping("/{id}")
-	public ResponseEntity<Cliente> listar(@PathVariable Integer id) {
-		Cliente cliente = service.buscar(id);
+	public ResponseEntity<Pedido> listar(@PathVariable Integer id) {
+		Pedido pedido = service.buscar(id);
 		
-		return ResponseEntity.ok(cliente);
+		return ResponseEntity.ok(pedido);
 	}
 }
