@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.fabiohb.cursos.cursomc.domain.Categoria;
@@ -32,6 +35,11 @@ public class CategoriaService {
 		return repository.findAll();
 	}
 	
+	public Page<Categoria> findPage(Integer page, Integer size, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
+		return repository.findAll(pageRequest);
+	}
+
 	public Categoria insert(Categoria categoria) {
 		categoria.setId(null);
 		return repository.save(categoria);
