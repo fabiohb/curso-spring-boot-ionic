@@ -1,5 +1,7 @@
 package com.fabiohb.cursos.cursomc.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +27,10 @@ public class CategoriaService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName())
 			);
 	}
+
+	public List<Categoria> findAll() {
+		return repository.findAll();
+	}
 	
 	public Categoria insert(Categoria categoria) {
 		categoria.setId(null);
@@ -43,4 +49,5 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}
 	}
+
 }

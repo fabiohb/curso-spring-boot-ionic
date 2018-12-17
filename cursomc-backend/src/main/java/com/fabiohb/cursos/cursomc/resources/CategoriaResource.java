@@ -1,6 +1,8 @@
 package com.fabiohb.cursos.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fabiohb.cursos.cursomc.domain.Categoria;
+import com.fabiohb.cursos.cursomc.dto.CategoriaDTO;
 import com.fabiohb.cursos.cursomc.services.CategoriaService;
 
 @RestController
-@RequestMapping("/categoriass")
+@RequestMapping("/categorias")
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public class CategoriaResource {
 
@@ -32,6 +35,17 @@ public class CategoriaResource {
 		Categoria categoria = service.find(id);
 		
 		return ResponseEntity.ok(categoria);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> categorias = service.findAll();
+		
+		List<CategoriaDTO> categorioasDTO = categorias.stream()
+			.map(catecoria -> new CategoriaDTO(catecoria))
+			.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(categorioasDTO);
 	}
 	
 	@PostMapping
