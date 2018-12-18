@@ -49,13 +49,7 @@ public class ClienteService {
 	public Cliente update(Cliente cliente) {
 		Cliente clienteAtual = find(cliente.getId());
 		updateData(clienteAtual, cliente);
-		
 		return repository.save(clienteAtual);
-	}
-
-	private void updateData(Cliente oldObj, Cliente newObj) {
-		oldObj.setNome(newObj.getNome());
-		oldObj.setEmail(newObj.getEmail());
 	}
 
 	public void delete(Integer id) {
@@ -73,5 +67,10 @@ public class ClienteService {
 			clienteDTO.getEmail(), 
 			null, 
 			null);
+	}
+
+	private void updateData(Cliente oldObj, Cliente newObj) {
+		oldObj.setNome(newObj.getNome());
+		oldObj.setEmail(newObj.getEmail());
 	}
 }
