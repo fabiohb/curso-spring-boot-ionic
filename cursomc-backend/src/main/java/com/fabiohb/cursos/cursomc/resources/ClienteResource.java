@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fabiohb.cursos.cursomc.domain.Cliente;
 import com.fabiohb.cursos.cursomc.dto.ClienteDTO;
+import com.fabiohb.cursos.cursomc.dto.ClienteNewDTO;
 import com.fabiohb.cursos.cursomc.services.ClienteService;
 
 @RestController
@@ -33,69 +34,69 @@ public class ClienteResource {
 
 	@Autowired
 	private ClienteService service;
-	
+
 	@GetMapping
 	@RequestMapping("/{id}")
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		Cliente cliente = service.find(id);
-		
+
 		return ResponseEntity.ok(cliente);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> clientes = service.findAll();
-		
+
 		List<ClienteDTO> categorioasDTO = clientes.stream()
 			.map(ClienteDTO::new)
 			.collect(Collectors.toList());
-		
+
 		return ResponseEntity.ok(categorioasDTO);
 	}
-	
+
 	@GetMapping("/page")
 	public ResponseEntity<Page<ClienteDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page, 
-			@RequestParam(value = "size", defaultValue = "24") Integer size, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "size", defaultValue = "24") Integer size,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		
+
 		Page<Cliente> clientes = service.findPage(page, size, orderBy, direction);
 		Page<ClienteDTO> categorioasDTO = clientes.map(ClienteDTO::new);
-		
+
 		return ResponseEntity.ok(categorioasDTO);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO clienteDTO) {
-		Cliente cliente = service.fromDTO(clienteDTO);
-		
-		Cliente clienteInserida = service.insert(cliente );
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO clienteNewDTO) {
+		Cliente cliente = service.fromDTO(clienteNewDTO);
+
+		Cliente clienteInserido = service.insert(cliente);
 
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
 					.path("/{id}")
-					.buildAndExpand(clienteInserida.getId())
+					.buildAndExpand(clienteInserido.getId())
 					.toUri();
 
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO clienteDTO, @PathVariable Integer id) {
 		Cliente cliente = service.fromDTO(clienteDTO);
-		
+
 		cliente.setId(id);
-		
+
 		service.update(cliente);
 
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
-		
+
 		return ResponseEntity.noContent().build();
 	}
 }
