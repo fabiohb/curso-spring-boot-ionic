@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.fabiohb.cursos.cursomc.domain.Categoria;
+import com.fabiohb.cursos.cursomc.dto.CategoriaDTO;
 import com.fabiohb.cursos.cursomc.repositories.CategoriaRepository;
 import com.fabiohb.cursos.cursomc.services.exceptions.DataIntegrityException;
 import com.fabiohb.cursos.cursomc.services.exceptions.ObjectNotFoundException;
@@ -58,4 +59,7 @@ public class CategoriaService {
 		}
 	}
 
+	public Categoria fromDTO(CategoriaDTO categoriaDTO) {
+		return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
+	}
 }
