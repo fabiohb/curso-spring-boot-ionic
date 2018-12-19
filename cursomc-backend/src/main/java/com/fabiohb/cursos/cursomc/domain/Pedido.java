@@ -44,14 +44,14 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "endereco_entrega_id")
 	private Endereco enderecoEntrega;
 
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
-	
+
 	public Pedido() {
 		super();
 	}
@@ -63,7 +63,7 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 		this.enderecoEntrega = enderecoEntrega;
 	}
-	
+
 	@JsonIgnore
 	public List<Produto> getProdutos() {
 		return itens.stream()
@@ -71,4 +71,9 @@ public class Pedido implements Serializable {
 			.collect(Collectors.toList());
 	}
 
+	public Double getValorTotal() {
+		return itens.stream()
+			.mapToDouble(ItemPedido::getSubTotal)
+			.sum();
+	}
 }
