@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fabiohb.cursos.cursomc.domain.Cliente;
 
+
 @Repository
 @Scope(BeanDefinition.SCOPE_SINGLETON)
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
