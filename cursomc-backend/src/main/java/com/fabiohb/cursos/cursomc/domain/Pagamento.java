@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 
 import com.fabiohb.cursos.cursomc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -50,7 +52,7 @@ public abstract class Pagamento implements Serializable {
 	public EstadoPagamento getEstadoPagamento() {
 		return EstadoPagamento.toEnum(estado);
 	}
-	
+
 	public void setEstadoPagamento(EstadoPagamento estado) {
 		this.estado = estado.getCod();
 	}
