@@ -192,8 +192,9 @@ public class DBService {
 		produto10.getCategorias().addAll(asList(categoria6));
 		produto11.getCategorias().addAll(asList(categoria7));
 
-		categoriaRepository
-				.saveAll(asList(categoria1, categoria2, categoria3, categoria4, categoria5, categoria6, categoria7));
+		categoriaRepository.saveAll(asList(categoria1, categoria2, categoria3, categoria4, categoria5, categoria6,
+				categoria7));
+
 		produtoRepository.saveAll(asList(produto1, produto2, produto3, produto4, produto5, produto6, produto7, produto8,
 				produto9, produto10, produto11));
 
