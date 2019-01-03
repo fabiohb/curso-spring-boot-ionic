@@ -2,3 +2,14 @@ spring:
   profiles:
     active:
       - test
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false
+mail:
+  default:
+    sender: fabio.hb@gmail.com
+    recipient: fabio.hb@gmail.com
+  
