@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.fabiohb.cursos.cursomc.services.DBService;
+import com.fabiohb.cursos.cursomc.services.EmailService;
+import com.fabiohb.cursos.cursomc.services.email.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -25,6 +27,11 @@ public class DevConfig {
 		}
 
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 
 }
