@@ -1,9 +1,12 @@
 package com.fabiohb.cursos.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,5 +78,27 @@ public class Pedido implements Serializable {
 		return itens.stream()
 			.mapToDouble(ItemPedido::getSubTotal)
 			.sum();
+	}
+	
+	public String toEmailString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat stf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido Número: ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(stf.format(getInstante()));
+		builder.append(", Cleiente: ");
+		builder.append(getCliente().getNome());
+		builder.append(", Situação do Pagamento: ");
+		builder.append(getPagamento().getEstadoPagamento().getDescricao());
+		builder.append("\nDetalhes:\n");
+		getItens().stream().forEach(
+			(item) -> builder.append(item.toEmailString())
+		);
+		builder.append("Valor Total: ");
+		builder.append(nf.format(getValorTotal()));
+		return builder.toString();
 	}
 }

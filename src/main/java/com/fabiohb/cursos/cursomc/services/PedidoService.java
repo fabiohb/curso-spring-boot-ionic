@@ -14,6 +14,7 @@ import com.fabiohb.cursos.cursomc.domain.ItemPedido;
 import com.fabiohb.cursos.cursomc.domain.Pagamento;
 import com.fabiohb.cursos.cursomc.domain.PagamentoComBoleto;
 import com.fabiohb.cursos.cursomc.domain.Pedido;
+import com.fabiohb.cursos.cursomc.domain.Produto;
 import com.fabiohb.cursos.cursomc.repositories.ItemPedidoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PagamentoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PedidoRepository;
@@ -37,6 +38,9 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoService produtoService;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	public Pedido find(Integer id) {
 		return repository
@@ -51,6 +55,7 @@ public class PedidoService {
 
 		pedido.setId(null);
 		pedido.setInstante(dataPedido);
+		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
 
 		Pagamento pagamento = pedido.getPagamento();
 		pagamento.setEstadoPagamento(PENDENTE);
@@ -64,13 +69,18 @@ public class PedidoService {
 		pagamentoRepository.save(pagamento);
 
 		for (ItemPedido item : pedido.getItens()) {
+			Produto produto = produtoService.find(item.getProduto().getId());
+			
 			item.setDesconto(0.0);
-			item.setPreco(produtoService.find(item.getProduto().getId()).getPreco());
+			item.setProduto(produto);
+			item.setPreco(produto.getPreco());
 			item.setPedido(pedido);
 		}
 
 		itemPedidoRepository.saveAll(pedido.getItens());
 
+		System.out.println(pedido.toEmailString());
+		
 		return pedido;
 	}
 
