@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,9 @@ public class ClienteService {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	public Cliente find(Integer id) {
 		return repository
@@ -80,6 +84,7 @@ public class ClienteService {
 			clienteDTO.getNome(),
 			clienteDTO.getEmail(),
 			null,
+			null,
 			null);
 	}
 
@@ -94,7 +99,8 @@ public class ClienteService {
 			clienteNewDTO.getNome(),
 			clienteNewDTO.getEmail(),
 			clienteNewDTO.getCpfOuCnpj(),
-			TipoCliente.toEnum(clienteNewDTO.getTipo())
+			TipoCliente.toEnum(clienteNewDTO.getTipo()),
+			passwordEncoder.encode(clienteNewDTO.getSenha())
 		);
 
 		Endereco endereco = new Endereco(
