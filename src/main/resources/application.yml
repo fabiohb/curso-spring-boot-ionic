@@ -26,6 +26,10 @@ spring:
         ssl:
           enable: true
 
+jwt:
+  secret: SequenciaDeCaracteresParaAssinarToken
+  expiration: 60000
+
 mail:
   default:
     sender: fabio.hb@gmail.com
