@@ -6,7 +6,7 @@ import com.fabiohb.cursos.cursomc.security.UserSS;
 
 public class UserService {
 
-	public static UserSS autheticated() {
+	public static UserSS authenticated() {
 		try {
 			return (UserSS) SecurityContextHolder
 				.getContext()
