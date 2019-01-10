@@ -7,6 +7,9 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.fabiohb.cursos.cursomc.domain.Cliente;
@@ -18,6 +21,8 @@ import com.fabiohb.cursos.cursomc.domain.Produto;
 import com.fabiohb.cursos.cursomc.repositories.ItemPedidoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PagamentoRepository;
 import com.fabiohb.cursos.cursomc.repositories.PedidoRepository;
+import com.fabiohb.cursos.cursomc.security.UserSS;
+import com.fabiohb.cursos.cursomc.services.exceptions.AuthorizationException;
 import com.fabiohb.cursos.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -87,4 +92,15 @@ public class PedidoService {
 		return pedido;
 	}
 
+	public Page<Pedido> findPage(Integer page, Integer size, String orderBy, String direction) {
+		UserSS user = UserService.autheticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.find(user.getId());
+		return repository.findByCliente(cliente, pageRequest);
+	}
+	
 }
