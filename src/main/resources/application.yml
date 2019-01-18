@@ -26,9 +26,19 @@ spring:
         ssl:
           enable: true
 
+aws:
+  access_key_id: AKIAIOKX4MZGGEATY2EA
+  secret_access_key: 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
+
+s3:
+  bucket: curso-spring-ionic
+  region: sa-east-1
+  
+
 jwt:
   secret: SequenciaDeCaracteresParaAssinarToken
-  expiration: 60000
+  expiration: 86400000 # 1 dia
+#  expiration: 60000 # 1 min
 
 mail:
   default:
