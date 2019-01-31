@@ -26,7 +26,7 @@ public class S3Service {
 		try {
 			log.info("Iniciando upload");
 			File file = new File(localFilePath);
-			s3client.putObject(bucket, "teste", file);
+			s3client.putObject(bucket, "teste.jpg", file);
 			log.info("Upload finalizado");
 		} catch (AmazonServiceException e) {
 			log.error("AmazonServiceException: Status code = " + e.getErrorCode(), e);
