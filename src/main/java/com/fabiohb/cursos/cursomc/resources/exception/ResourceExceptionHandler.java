@@ -11,8 +11,12 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.fabiohb.cursos.cursomc.services.exceptions.AuthorizationException;
 import com.fabiohb.cursos.cursomc.services.exceptions.DataIntegrityException;
+import com.fabiohb.cursos.cursomc.services.exceptions.FileException;
 import com.fabiohb.cursos.cursomc.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
@@ -21,6 +25,27 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotfound(ObjectNotFoundException e, HttpServletRequest request) {
 		return toResponse(HttpStatus.NOT_FOUND, e.getMessage());
+	}
+	
+	@ExceptionHandler(FileException.class)
+	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
+		return toResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+	}
+	
+	@ExceptionHandler(AmazonServiceException.class)
+	public ResponseEntity<StandardError> amazonService(AmazonServiceException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.valueOf(e.getErrorCode());
+		return toResponse(status, e.getMessage());
+	}
+	
+	@ExceptionHandler(AmazonClientException.class)
+	public ResponseEntity<StandardError> amazonClient(AmazonClientException e, HttpServletRequest request) {
+		return toResponse(HttpStatus.BAD_REQUEST, e.getMessage());
+	}
+	
+	@ExceptionHandler(AmazonS3Exception.class)
+	public ResponseEntity<StandardError> amazonS3(AmazonS3Exception e, HttpServletRequest request) {
+		return toResponse(HttpStatus.BAD_REQUEST, e.getMessage());
 	}
 	
 	@ExceptionHandler(DataIntegrityException.class)
