@@ -52,8 +52,6 @@ public class Cliente implements Serializable {
 	@JsonIgnore
 	private String senha;
 	
-	private String imageUrl;
-
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 

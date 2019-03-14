@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 public class S3Service {
 
 	@Autowired

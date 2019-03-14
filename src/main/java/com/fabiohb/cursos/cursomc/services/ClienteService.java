@@ -1,11 +1,14 @@
 package com.fabiohb.cursos.cursomc.services;
 
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -46,6 +49,12 @@ public class ClienteService {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefixo;
 
 	public Cliente find(Integer id) {
 		
@@ -145,14 +154,10 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		
-		URI uri = s3Service.uploadFile(multipartFile);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = prefixo + user.getId() + ".jpg";
+		InputStream inputStream = imageService.getInputStream(jpgImage, "jpg");
 		
-		repository.findById(user.getId())
-			.ifPresent(cliente -> {
-				cliente.setImageUrl(uri.toString());
-				repository.save(cliente);
-			});
-		
-		return uri;
+		return s3Service.uploadFile(inputStream, fileName, "image");
 	}
 }

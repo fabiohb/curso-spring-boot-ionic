@@ -44,4 +44,9 @@ mail:
   default:
     sender: fabio.hb@gmail.com
     recipient: fabio.hb@gmail.com
-  
+    
+img:
+  prefix:
+    client:
+      profile: cp
+ 

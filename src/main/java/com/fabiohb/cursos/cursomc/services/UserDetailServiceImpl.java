@@ -3,6 +3,8 @@ package com.fabiohb.cursos.cursomc.services;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +16,7 @@ import com.fabiohb.cursos.cursomc.repositories.ClienteRepository;
 import com.fabiohb.cursos.cursomc.security.UserSS;
 
 @Service
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 public class UserDetailServiceImpl implements UserDetailsService {
 
 	@Autowired
